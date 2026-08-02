@@ -23,7 +23,6 @@ def get_openmeteo_forecast(
     f"end_date={end_date}&"
     "hourly=temperature_2m"
 )
-
     response = requests.get(url)
 
     data = response.json()
@@ -49,11 +48,7 @@ def get_openmeteo_forecast(
 
 if __name__ == "__main__":
     forecast = get_openmeteo_forecast(
-        52.9336,
-        8.2370,
-        "2025-07-01",
-        "2025-07-31"
-    )
-
-print(forecast.head())
-print(forecast.tail())
+    52.9336,
+    8.2370
+)
+    print(forecast.head())
