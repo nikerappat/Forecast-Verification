@@ -8,7 +8,7 @@ import requests
 import pandas as pd
 
 
-def get_forecast():
+def get_openmeteo_forecast():
     url = (
         "https://api.open-meteo.com/v1/forecast?"
         "latitude=52.52&"
