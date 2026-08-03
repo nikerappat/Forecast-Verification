@@ -5,52 +5,37 @@ Created on Sun Aug  2 14:09:03 2026
 @author: niker
 """
 
+"""Verifikationsmetriken (MAE, RMSE, Bias) fuer Wettervorhersagen."""
+
 import numpy as np
-
-def calculate_mae(forecast, observation):
-    """
-    Calculate Mean Absolute Error.
-    """
-
-    error = forecast - observation
-
-    mae = np.mean(np.abs(error))
-
-    return mae
+import numpy.typing as npt
 
 
-def calculate_rmse(forecast, observation):
-    """
-    Calculate Root Mean Square Error.
-    """
+def calculate_mae(forecast: npt.ArrayLike, observation: npt.ArrayLike) -> float:
+    """Calculate Mean Absolute Error."""
+    error = np.asarray(forecast) - np.asarray(observation)
+    return float(np.mean(np.abs(error)))
 
-    error = forecast - observation
 
-    rmse = np.sqrt(np.mean(error ** 2))
+def calculate_rmse(forecast: npt.ArrayLike, observation: npt.ArrayLike) -> float:
+    """Calculate Root Mean Square Error."""
+    error = np.asarray(forecast) - np.asarray(observation)
+    return float(np.sqrt(np.mean(error ** 2)))
 
-    return rmse
 
-def calculate_bias(forecast, observation):
+def calculate_bias(forecast: npt.ArrayLike, observation: npt.ArrayLike) -> float:
     """
     Calculate forecast bias.
+
     Positive values indicate overforecasting.
     """
-
-    error = forecast - observation
-
-    bias = np.mean(error)
-
-    return bias
+    error = np.asarray(forecast) - np.asarray(observation)
+    return float(np.mean(error))
 
 
 if __name__ == "__main__":
-
     forecast = np.array([20, 22, 24])
     observation = np.array([21, 21, 23])
-    mae = calculate_mae(forecast, observation)
-    rmse = calculate_rmse(forecast, observation)
-    bias = calculate_bias(forecast, observation)
-
-    print("MAE:", mae)
-    print("RMSE:", rmse)
-    print("BIAS:", bias)
+    print("MAE:", calculate_mae(forecast, observation))
+    print("RMSE:", calculate_rmse(forecast, observation))
+    print("BIAS:", calculate_bias(forecast, observation))

@@ -5,44 +5,47 @@ Created on Sun Aug  2 13:13:50 2026
 @author: niker
 """
 
-from dwd import get_dwd_observation
-from openmeteo import get_openmeteo_forecast
-import inspect
-import openmeteo
+"""Vergleicht Open-Meteo-Vorhersagen mit DWD-Beobachtungen fuer eine Station."""
+
 import pandas as pd
 
-station = {
+from dwd import get_dwd_observation
+from openmeteo import get_openmeteo_forecast
+from verification import calculate_bias, calculate_mae, calculate_rmse
+
+STATION = {
     "id": "00044",
     "name": "Großenkneten",
     "latitude": 52.9336,
-    "longitude": 8.2370
+    "longitude": 8.2370,
 }
+START_DATE = "2025-07-01"
+END_DATE = "2025-07-31"
 
 
-forecast = get_openmeteo_forecast(
-    station["latitude"],
-    station["longitude"],
-    "2025-07-01",
-    "2025-07-31"
-)
+def main() -> None:
+    forecast = get_openmeteo_forecast(
+        STATION["latitude"], STATION["longitude"], START_DATE, END_DATE
+    )
+    observations = get_dwd_observation(STATION["id"])
+
+    merged = pd.merge(forecast, observations, on="time")
+    if merged.empty:
+        raise ValueError(
+            "Keine ueberlappenden Zeitstempel zwischen Vorhersage und "
+            "Beobachtung - Zeitraum und Stationsverfuegbarkeit pruefen."
+        )
+
+    mae = calculate_mae(merged["temperature_forecast"], merged["temperature_obs"])
+    bias = calculate_bias(merged["temperature_forecast"], merged["temperature_obs"])
+    rmse = calculate_rmse(merged["temperature_forecast"], merged["temperature_obs"])
+
+    print(f"Station: {STATION['name']} ({STATION['id']})")
+    print(f"Zeitraum: {START_DATE} bis {END_DATE}")
+    print(f"MAE:  {mae:.2f}")
+    print(f"BIAS: {bias:.2f}")
+    print(f"RMSE: {rmse:.2f}")
 
 
-observations = get_dwd_observation(
-    station["id"]
-)
-
-merged = pd.merge(
-    forecast,
-    observations,
-    on="time"
-)
-
-from verification import calculate_bias, calculate_mae, calculate_rmse
-
-mae = calculate_mae(merged["temperature_forecast"], merged["temperature_obs"])
-bias = calculate_bias(merged["temperature_forecast"], merged["temperature_obs"])
-rmse = calculate_rmse(merged["temperature_forecast"], merged["temperature_obs"])
-
-print("MAE:", mae)
-print("BIAS:", bias)
-print("RMSE:", rmse)
+if __name__ == "__main__":
+    main()
