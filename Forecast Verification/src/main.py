@@ -5,7 +5,7 @@ Created on Sun Aug  2 13:13:50 2026
 @author: niker
 """
 
-"""Vergleicht Open-Meteo-Vorhersagen mit DWD-Beobachtungen fuer eine Station."""
+"""Compares Open-Meteo-Forecast with DWD-Observation for one Station."""
 
 import pandas as pd
 
@@ -32,8 +32,8 @@ def main() -> None:
     merged = pd.merge(forecast, observations, on="time")
     if merged.empty:
         raise ValueError(
-            "Keine ueberlappenden Zeitstempel zwischen Vorhersage und "
-            "Beobachtung - Zeitraum und Stationsverfuegbarkeit pruefen."
+            "No overlapping timestamps between forecast and "
+            "observation"
         )
 
     mae = calculate_mae(merged["temperature_forecast"], merged["temperature_obs"])

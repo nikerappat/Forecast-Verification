@@ -5,7 +5,7 @@ Created on Sun Aug  2 14:09:03 2026
 @author: niker
 """
 
-"""Verifikationsmetriken (MAE, RMSE, Bias) fuer Wettervorhersagen."""
+""" (MAE, RMSE, Bias) for forecasts."""
 
 import numpy as np
 import numpy.typing as npt

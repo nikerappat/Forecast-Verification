@@ -25,24 +25,22 @@ def get_openmeteo_forecast(
     timezone: str = "UTC",
 ) -> pd.DataFrame:
     """
-    Download stuendlicher 2m-Temperaturvorhersagen ueber die
+    Download hourly 2m-temperature forecast via
     Open-Meteo Historical-Forecast-API.
 
     Parameters
     ----------
     latitude, longitude : float
-        Koordinaten des Standorts.
+        coordinates of station.
     start_date, end_date : str
-        ISO-Datumsangaben, z. B. "2025-07-01".
+        ISO-date, z. B. "2025-07-01".
     timezone : str
-        Zeitzone der zurueckgegebenen Zeitstempel. Standard ist "UTC",
-        damit die Werte zu den DWD-Beobachtungen passen, die ebenfalls
-        in UTC vorliegen.
+        timezone of returned timestamp. Standard "UTC", to match DWD also in UTC
 
     Returns
     -------
     pandas.DataFrame
-        Spalten: time (datetime64), temperature_forecast (°C).
+        cols: time (datetime64), temperature_forecast (°C).
     """
     params = {
         "latitude": latitude,
@@ -57,7 +55,7 @@ def get_openmeteo_forecast(
     data = response.json()
 
     if "hourly" not in data:
-        raise ValueError(f"Unerwartete Antwort der Open-Meteo API: {data}")
+        raise ValueError(f"unexpected response from Open-Meteo API: {data}")
 
     hourly_data = data["hourly"]
     df = pd.DataFrame({

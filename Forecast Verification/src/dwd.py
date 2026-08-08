@@ -4,7 +4,7 @@ Created on Sun Aug  2 14:23:09 2026
 
 @author: niker
 """
-"""Client zum Download und Parsen von DWD-Stationsdaten (Lufttemperatur, stuendlich)."""
+"""Download and Parse DWD-observational data (temperature, hourly)."""
 
 import re
 import zipfile
@@ -27,12 +27,12 @@ MISSING_VALUE = -999  # DWD-notion for missing values
 
 def get_station_list() -> pd.DataFrame:
     """
-    Download der DWD-Stationsmetadaten.
+    Download of DWD-Stationsmetadaten.
 
     Returns
     -------
     pandas.DataFrame
-        Spalten: station_id, from_date, to_date, height, latitude,
+        cols: station_id, from_date, to_date, height, latitude,
         longitude, name.
     """
     response = requests.get(DWD_STATION_URL, timeout=REQUEST_TIMEOUT)
@@ -54,7 +54,7 @@ def get_station_list() -> pd.DataFrame:
             })
 
     df = pd.DataFrame(stations)
-    # Zahlenspalten kommen aus der Textdatei zunaechst als String
+    # numbered cols come from text file as string
     for col in ("height", "latitude", "longitude"):
         df[col] = pd.to_numeric(df[col], errors="coerce")
     return df
@@ -62,11 +62,8 @@ def get_station_list() -> pd.DataFrame:
 
 def _find_station_zip_filename(station_id: str) -> str:
     """
-    Ermittelt den exakten Archivnamen fuer eine Station.
-
-    Der im Dateinamen kodierte Zeitraum (z. B. 20070401_20251231) ist
-    stationsabhaengig und daher nicht hart codierbar - er wird stattdessen
-    aus dem DWD-Verzeichnislisting ausgelesen.
+    gives station name from archive file
+    timeframe is dependent on station (no hard coding possible) - read from DWD-Verzeichnislisting
     """
     response = requests.get(DWD_DATA_URL, timeout=REQUEST_TIMEOUT)
     response.raise_for_status()
@@ -75,25 +72,24 @@ def _find_station_zip_filename(station_id: str) -> str:
     match = re.search(pattern, response.text)
     if not match:
         raise ValueError(
-            f"Keine historischen Daten fuer Station '{station_id}' gefunden."
+            f"no historic data for Station '{station_id}' found."
         )
     return match.group(0)
 
 
 def get_dwd_observation(station_id: str) -> pd.DataFrame:
     """
-    Download und Parsen der stuendlichen Lufttemperatur-Beobachtungen
-    einer Station.
+    Download and Parse hourly tempeature data from one station
 
     Parameters
     ----------
     station_id : str
-        DWD-Stationskennung, z. B. "00044".
+        DWD-Stations number, z. B. "00044".
 
     Returns
     -------
     pandas.DataFrame
-        Spalten: time (datetime64), temperature_obs (°C).
+        cols: time (datetime64), temperature_obs (°C).
     """
     filename = _find_station_zip_filename(station_id)
     url = DWD_DATA_URL + filename
@@ -113,8 +109,8 @@ def get_dwd_observation(station_id: str) -> pd.DataFrame:
     df = df[["MESS_DATUM", "TT_TU"]].rename(
         columns={"MESS_DATUM": "time", "TT_TU": "temperature_obs"}
     )
-    # DWD markiert fehlende Werte mit -999 - als NaN kennzeichnen,
-    # damit sie nicht faelschlich in die Metriken einfliessen
+    # DWD marks missing values as -999 
+    # we mark as NAN
     df["temperature_obs"] = df["temperature_obs"].replace(MISSING_VALUE, pd.NA)
 
     return df
