@@ -8,7 +8,7 @@ import requests
 import pandas as pd
 
 
-"""Client zum Abrufen historischer Vorhersagedaten von Open-Meteo."""
+"""Retrieving Open Meteo historical forecasts via Open Meteo API"""
 
 import pandas as pd
 import requests
