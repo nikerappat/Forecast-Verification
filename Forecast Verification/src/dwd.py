@@ -109,8 +109,7 @@ def get_dwd_observation(station_id: str) -> pd.DataFrame:
     df = df[["MESS_DATUM", "TT_TU"]].rename(
         columns={"MESS_DATUM": "time", "TT_TU": "temperature_obs"}
     )
-    # DWD marks missing values as -999 
-    # we mark as NAN
+
     df["temperature_obs"] = df["temperature_obs"].replace(MISSING_VALUE, pd.NA)
 
     return df
