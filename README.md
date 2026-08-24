@@ -31,11 +31,11 @@ This tool downloads a historical weather forecast for a given location and time 
 ## Project Structure
 
 ```
-.
-├── main.py            # Entry point: orchestrates the full workflow
-├── dwd.py              # DWD station list and observation data client
-├── openmeteo.py         # Open-Meteo forecast data client
-├── verification.py       # Forecast verification metrics (MAE, RMSE, Bias)
+├── src/
+   ├── main.py            # Entry point: orchestrates the full workflow
+   ├── dwd.py              # DWD station list and observation data client
+   ├── openmeteo.py         # Open-Meteo forecast data client
+   ├── verification.py       # Forecast verification metrics (MAE, RMSE, Bias)
 └── README.md
 ```
 
