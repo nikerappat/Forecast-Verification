@@ -115,6 +115,7 @@ RMSE: 0.83
 - Support multiple stations in a single run
 - Add additional verification metrics (e.g. correlation, skill score)
 - Add automated tests for the data-fetching and merge logic
+- Plotting for visualisation
 
 
 
