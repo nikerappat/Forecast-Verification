@@ -23,10 +23,10 @@ This tool downloads a historical weather forecast for a given location and time 
 
 - Fetch historical hourly temperature forecasts from the Open-Meteo Historical Forecast API
 - Fetch hourly temperature observations from DWD Open Data
-- Automatically resolve the correct DWD archive filename per station (no hardcoded date ranges — the DWD file naming includes a station-specific date range, which is looked up dynamically)
+- Automatically resolve the correct DWD archive filename per station (no hardcoded date ranges, the DWD file naming includes a station-specific date range, which is looked up dynamically)
 - Merge forecast and observation data on matching timestamps
 - Calculate MAE, RMSE, and Bias
-- Handle missing DWD measurements correctly — the DWD convention marks missing values as `-999`, which is flagged as `NaN` before any metric is computed
+- Handle missing DWD measurements correctly, the DWD convention marks missing values as `-999`, which is flagged as `NaN` before any metric is computed
 
 ## Project Structure
 
