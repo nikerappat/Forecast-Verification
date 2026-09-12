@@ -57,21 +57,27 @@ Correlation indicates an association, not causation. A strong correlation theref
 ## Project Structure
 
 ```
-├── src/
-│   ├── main.py                 # Entry point for regular use: loads metrics, analyzes and plots results
-│   ├── generate_metrics.py     # One-off/occasional: fetches data and (re)computes forecast-vs-observation metrics per DWD station
-│   ├── dwd.py                  # DWD station list and observation data client
-│   ├── openmeteo.py            # Open-Meteo forecast data client
-│   └── verification.py         # Forecast verification metrics (MAE, RMSE, Bias)
-├── results/
-│   └── stations_metrics.json   # Per-station metrics (MAE, Bias, RMSE, Pearson r) for stations with full data coverage in the configured time period
-├── plots/
-│   ├── height_rmse_low.png
-│   ├── height_rmse_mid.png
-│   ├── height_rmse_elevated.png
-│   └── height_rmse_high.png
+Forecast-Verification/
+├── Forecast Verification/
+│   ├── src/
+│   │   ├── main.py                 # Entry point for regular use: loads metrics, analyzes and plots results
+│   │   ├── generate_metrics.py     # One-off/occasional: fetches data and (re)computes forecast-vs-observation metrics per DWD station
+│   │   ├── dwd.py                  # DWD station list and observation data client
+│   │   ├── openmeteo.py            # Open-Meteo forecast data client
+│   │   └── verification.py         # Forecast verification metrics (MAE, RMSE, Bias)
+│   ├── results/
+│   │   └── stations_metrics.json   # Per-station metrics (MAE, Bias, RMSE, Pearson r) for stations with full data coverage in the configured time period
+│   └── plots/
+│       ├── height_rmse_low.png
+│       ├── height_rmse_mid.png
+│       ├── height_rmse_elevated.png
+│       └── height_rmse_high.png
 └── README.md
 ```
+
+> **Note:** I've assumed `src/` and `results/` also live inside the `Forecast Verification/` subfolder, matching where `plots/` sits. Double-check that against your actual repo layout and adjust the paths above (and the relative paths used in the code, e.g. `../results/stations_metrics.json`) if it's different.
+
+> **Note:** `plot_corr` accepts an optional `save_path` and calls `fig.savefig(save_path, dpi=300, bbox_inches="tight")` when it's set, otherwise it falls back to `plt.show()`. `plot_height_rmse` does not yet have this option — it always calls `plt.show()` — so the `plots/height_rmse_*.png` files listed above are not written automatically yet.
 
 ## Requirements
 
@@ -102,7 +108,7 @@ station = next(
 )
 complete_pairs, mae, bias, rmse, r = stations_metrics(station)
 plot_corr(complete_pairs, station.name, r, mae, bias, rmse,
-          save_path=f"../plots/correlation_metrics_{station.name}.png")
+          save_path=f"../Forecast Verification/plots/correlation_metrics_{station.name}.png")
 ```
 
 Example output:
@@ -119,7 +125,6 @@ pearson correlation coefficient: 0.996
 ```
 
 ![Scatter plot for Angermünde showing resulting metrics](Forecast%20Verification/plots/correlation_metrics_Angermünde.png)
-
 
 ### 2. Full set of stations with available data in the chosen time period
 
@@ -194,8 +199,8 @@ Observations:
 
 | Function | Description |
 |---|---|
-| `plot_corr(df, station, r, mae, bias, rmse, save_path=None)` | Scatter plot of forecast vs. observed temperature for a single station. |
-| `plot_height_rmse(df, category)` | Scatter plot of station height vs. RMSE with a linear regression line. |
+| `plot_corr(df, station, r, mae, bias, rmse, save_path=None)` | Scatter plot of forecast vs. observed temperature for a single station. Saves to `save_path` if given, otherwise shows the plot interactively. |
+| `plot_height_rmse(df, category)` | Scatter plot of station height vs. RMSE with a linear regression line. Always shown interactively; no save option yet. |
 
 ## Known Limitations
 
@@ -203,13 +208,11 @@ Observations:
 - DWD historical archives are only updated periodically; very recent observations may not yet be available.
 - Network access is required at runtime; no local caching of downloaded data.
 - Only five stations fall into the "high elevation" (>1000 m) group, so results for that category should be treated with caution.
+- `plot_height_rmse` always displays interactively (`plt.show()`) and has no `save_path` option yet, unlike `plot_corr` — so the `plots/height_rmse_*.png` files are not created automatically.
 
 ## Roadmap
 
+- Add a `save_path` option to `plot_height_rmse`, matching `plot_corr`, so height/RMSE plots can be saved automatically
 - Add additional verification metrics (e.g. skill score)
 - Significance testing
 - Add automated tests for the data-fetching and merge logic
-
-
-
-
