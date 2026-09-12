@@ -75,10 +75,6 @@ Forecast-Verification/
 └── README.md
 ```
 
-> **Note:** I've assumed `src/` and `results/` also live inside the `Forecast Verification/` subfolder, matching where `plots/` sits. Double-check that against your actual repo layout and adjust the paths above (and the relative paths used in the code, e.g. `../results/stations_metrics.json`) if it's different.
-
-> **Note:** `plot_corr` accepts an optional `save_path` and calls `fig.savefig(save_path, dpi=300, bbox_inches="tight")` when it's set, otherwise it falls back to `plt.show()`. `plot_height_rmse` does not yet have this option — it always calls `plt.show()` — so the `plots/height_rmse_*.png` files listed above are not written automatically yet.
-
 ## Requirements
 
 - Python 3.9+
