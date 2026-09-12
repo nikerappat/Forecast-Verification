@@ -9,6 +9,7 @@ Created on Sun Aug  2 14:09:03 2026
 
 import numpy as np
 import numpy.typing as npt
+import pandas as pd
 
 
 def calculate_mae(forecast: npt.ArrayLike, observation: npt.ArrayLike) -> float:
@@ -32,6 +33,11 @@ def calculate_bias(forecast: npt.ArrayLike, observation: npt.ArrayLike) -> float
     error = np.asarray(forecast) - np.asarray(observation)
     return float(np.mean(error))
 
+def pearson_corr(df: pd.DataFrame) -> float:
+    if df.shape[1] < 2:
+        raise ValueError("DataFrame needs two columns at least.")
+    col1, col2 = df.columns[0], df.columns[1]
+    return df[col1].corr(df[col2])
 
 if __name__ == "__main__":
     forecast = np.array([20, 22, 24])
