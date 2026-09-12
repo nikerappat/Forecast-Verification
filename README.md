@@ -69,8 +69,8 @@ Forecast-Verification/
 │   │   └── stations_metrics.json   # Per-station metrics (MAE, Bias, RMSE, Pearson r) for stations with full data coverage in the configured time period
 │   └── plots/
 │       ├── height_rmse_low.png
-│       ├── height_rmse_mid.png
-│       ├── height_rmse_elevated.png
+│       ├── height_rmse_medium.png
+│       ├── height_rmse_elev.png
 │       └── height_rmse_high.png
 └── README.md
 ```
