@@ -19,9 +19,9 @@ Forecast quality depends on the station's elevation. Higher-elevation stations s
 
 | Metric | Description |
 |---|---|
-| MAE | Mean Absolute Error — average magnitude of forecast error |
-| RMSE | Root Mean Square Error — penalizes larger errors more strongly than MAE |
-| Bias | Mean signed error — positive means the forecast overestimated temperature, negative means it underestimated |
+| MAE | Mean Absolute Error - average magnitude of forecast error |
+| RMSE | Root Mean Square Error - penalizes larger errors more strongly than MAE |
+| Bias | Mean signed error -positive means the forecast overestimated temperature, negative means it underestimated |
 | Correlation | Correlation describes the strength and direction of the linear relationship between two variables. |
 
 In this project, the Pearson correlation coefficient (r) is used. Its value ranges from -1 to +1:
@@ -38,7 +38,7 @@ Correlation indicates an association, not causation. A strong correlation theref
 
 - Fetch historical hourly temperature forecasts from the Open-Meteo Historical Forecast API
 - Fetch hourly temperature observations from DWD Open Data
-- Automatically resolve the correct DWD archive filename per station (no hardcoded date ranges — the DWD file naming includes a station-specific date range, which is looked up dynamically)
+- Automatically resolve the correct DWD archive filename per station (no hardcoded date ranges - the DWD file naming includes a station-specific date range, which is looked up dynamically)
 - Merge forecast and observation data on matching timestamps
 - Calculate MAE, RMSE, and Bias
 - Handle missing DWD measurements correctly — the DWD convention marks missing values as `-999`, which is flagged as `NaN` before any metric is computed
@@ -145,10 +145,10 @@ Correlation between station height and RMSE:
 | high | 0.314 |
 | overall | 0.27 |
 
-- **Low:** r = 0.397 — at lower elevations, RMSE tends to increase with altitude.
-- **Mid:** r = -0.033 — indicates virtually no linear relationship.
-- **Elevated:** r = 0.176 — a slight positive trend, but rather weak.
-- **High:** r = 0.314 — RMSE tends to increase with altitude, but note: there are only five stations above 1000 m, so this result should be treated with caution.
+- **Low:** r = 0.397 - at lower elevations, RMSE tends to increase with altitude.
+- **Mid:** r = -0.033 - indicates virtually no linear relationship.
+- **Elevated:** r = 0.176 - a slight positive trend, but rather weak.
+- **High:** r = 0.314 - RMSE tends to increase with altitude, but note: there are only five stations above 1000 m, so this result should be treated with caution.
 
 Observations:
 - The correlation is not evenly distributed across all elevation ranges.
@@ -207,7 +207,6 @@ Observations:
 
 ## Roadmap
 
-- Add a `save_path` option to `plot_height_rmse`, matching `plot_corr`, so height/RMSE plots can be saved automatically
 - Add additional verification metrics (e.g. skill score)
 - Significance testing
 - Add automated tests for the data-fetching and merge logic
