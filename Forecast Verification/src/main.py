@@ -59,7 +59,7 @@ def plot_corr(df: pd.DataFrame, station: str, r: float, mae: float, bias: float,
     plt.close(fig)
 
 
-def plot_height_rmse(df: pd.DataFrame, category: str) -> None:
+def plot_height_rmse(df: pd.DataFrame, category: str, save_path: str | None = None) -> None:
     #Plots station elevation against RMSE, including a linear regression.
     #Hypothesis: Forecast quality depends on station elevation.
     #Works for any DataFrame with more than one station (e.g., filtered by elevation).
@@ -80,19 +80,23 @@ def plot_height_rmse(df: pd.DataFrame, category: str) -> None:
     ax.set_ylabel("RMSE [°C]")
     ax.set_title(f"Station Height vs. Temperature Forecast RMSE {category}")
 
-    plt.show()
+    if save_path:
+        fig.savefig(save_path, dpi=300, bbox_inches="tight")
+    else:
+        plt.show()
     plt.close(fig)
 
 
-plot_height_rmse(low_stations, "Low Stations < 200 m")
-plot_height_rmse(mid_stations, "Mid Stations > 200 m & < 500 m")
-plot_height_rmse(higher_stations, "Elevated Stations > 500 m & < 1000 m")
-plot_height_rmse(high_stations, "High Stations > 1000 m")
+plot_height_rmse(low_stations, "Low Stations < 200 m", "../plots/height_rmse_low.png")
+plot_height_rmse(mid_stations, "Mid Stations > 200 m & < 500 m", "../plots/height_rmse_medium.png")
+plot_height_rmse(higher_stations, "Elevated Stations > 500 m & < 1000 m", "../plots/height_rmse_elev.png")
+plot_height_rmse(high_stations, "High Stations > 1000 m", "../plots/height_rmse_high.png")
 
 
 # --- Example: Look up and plot a specific station in real time---------------
 # from generate_metrics import load_filtered_stations, stations_metrics
 #
+# type in the ID of the chosen station
 # filtered_list = load_filtered_stations()
 # station = next(
 #     s for s in filtered_list.itertuples(index=False)
