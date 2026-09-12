@@ -196,7 +196,7 @@ Observations:
 | Function | Description |
 |---|---|
 | `plot_corr(df, station, r, mae, bias, rmse, save_path=None)` | Scatter plot of forecast vs. observed temperature for a single station. |
-| `plot_height_rmse(df, category)` | Scatter plot of station height vs. RMSE with a linear regression line. Always shown interactively; no save option yet. |
+| `plot_height_rmse(df, category)` | Scatter plot of station height vs. RMSE with a linear regression line. Always shown interactively|
 
 ## Known Limitations
 
