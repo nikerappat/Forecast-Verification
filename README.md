@@ -195,7 +195,7 @@ Observations:
 
 | Function | Description |
 |---|---|
-| `plot_corr(df, station, r, mae, bias, rmse, save_path=None)` | Scatter plot of forecast vs. observed temperature for a single station. Saves to `save_path` if given, otherwise shows the plot interactively. |
+| `plot_corr(df, station, r, mae, bias, rmse, save_path=None)` | Scatter plot of forecast vs. observed temperature for a single station. |
 | `plot_height_rmse(df, category)` | Scatter plot of station height vs. RMSE with a linear regression line. Always shown interactively; no save option yet. |
 
 ## Known Limitations
@@ -204,7 +204,6 @@ Observations:
 - DWD historical archives are only updated periodically; very recent observations may not yet be available.
 - Network access is required at runtime; no local caching of downloaded data.
 - Only five stations fall into the "high elevation" (>1000 m) group, so results for that category should be treated with caution.
-- `plot_height_rmse` always displays interactively (`plt.show()`) and has no `save_path` option yet, unlike `plot_corr` — so the `plots/height_rmse_*.png` files are not created automatically.
 
 ## Roadmap
 
