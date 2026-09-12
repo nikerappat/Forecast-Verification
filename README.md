@@ -160,8 +160,8 @@ Observations:
 - In the 200–500 m range, the correlation disappears almost entirely.
 
 ![Scatter plot Station Height vs. Temperature Forecast RMSE low stations](Forecast%20Verification/plots/height_rmse_low.png)
-![Scatter plot Station Height vs. Temperature Forecast RMSE mid stations](Forecast%20Verification/plots/height_rmse_mid.png)
-![Scatter plot Station Height vs. Temperature Forecast RMSE elevated stations](Forecast%20Verification/plots/height_rmse_elevated.png)
+![Scatter plot Station Height vs. Temperature Forecast RMSE mid stations](Forecast%20Verification/plots/height_rmse_medium.png)
+![Scatter plot Station Height vs. Temperature Forecast RMSE elevated stations](Forecast%20Verification/plots/height_rmse_elev.png)
 ![Scatter plot Station Height vs. Temperature Forecast RMSE high stations](Forecast%20Verification/plots/height_rmse_high.png)
 
 ## Module Reference
