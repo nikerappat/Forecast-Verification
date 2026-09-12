@@ -118,7 +118,8 @@ RMSE: 0.77
 pearson correlation coefficient: 0.996
 ```
 
-![Scatter plot for Angermünde showing resulting metrics](plots/correlation_metrics_Angermünde.png)
+![Scatter plot for Angermünde showing resulting metrics](Forecast%20Verification/plots/correlation_metrics_Angermünde.png)
+
 
 ### 2. Full set of stations with available data in the chosen time period
 
@@ -153,10 +154,10 @@ Observations:
 - The range ≤200 m, in particular, shows a significantly stronger correlation.
 - In the 200–500 m range, the correlation disappears almost entirely.
 
-![Scatter plot Station Height vs. Temperature Forecast RMSE low stations](plots/height_rmse_low.png)
-![Scatter plot Station Height vs. Temperature Forecast RMSE mid stations](plots/height_rmse_mid.png)
-![Scatter plot Station Height vs. Temperature Forecast RMSE elevated stations](plots/height_rmse_elevated.png)
-![Scatter plot Station Height vs. Temperature Forecast RMSE high stations](plots/height_rmse_high.png)
+![Scatter plot Station Height vs. Temperature Forecast RMSE low stations](Forecast%20Verification/plots/height_rmse_low.png)
+![Scatter plot Station Height vs. Temperature Forecast RMSE mid stations](Forecast%20Verification/plots/height_rmse_mid.png)
+![Scatter plot Station Height vs. Temperature Forecast RMSE elevated stations](Forecast%20Verification/plots/height_rmse_elevated.png)
+![Scatter plot Station Height vs. Temperature Forecast RMSE high stations](Forecast%20Verification/plots/height_rmse_high.png)
 
 ## Module Reference
 
